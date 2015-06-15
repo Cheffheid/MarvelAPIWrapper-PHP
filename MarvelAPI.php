@@ -74,9 +74,13 @@
             }
 
             $request = $this->base_url . $type . $id . $action;
-            $request .= '?apikey=' . $pubkey;
-            $request .= '&ts=' . $date->getTimestamp();
-            $request .= '&hash=' . $hash;
+            $request .= '?'.http_build_query(
+                array(
+                    'apikey' => $pubkey,
+                    'ts' => $date->getTimestamp(),
+                    'hash' => $hash
+                )
+            );
 
             $curl = curl_init($request);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
